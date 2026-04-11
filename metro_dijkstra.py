@@ -8,18 +8,29 @@ import folium
 # CONFIGURAÇÕES
 # ------------------------------------------------------------
 ARQUIVO_ARESTAS = 'arestas_completas.csv'
+ARQUIVO_ESTACOES = 'metro_moscou.csv'
 
 # ------------------------------------------------------------
 # CARREGAMENTO DO GRAFO
 # ------------------------------------------------------------
-def carregar_grafo(arquivo):
+def carregar_grafo(arquivo_arestas, arquivo_estacoes):
     grafo = defaultdict(list)
     info = {}                # id -> (nome_pt, nome_original, nome_trans, linha)
     nome_para_ids = defaultdict(list)
-    coords = {}              # latitude lontitude
-    linha_estacao = {}       # id/nome linha
+    coords = {}              # id -> (lat, lon)
+    linha_estacao = {}       # id -> nome da linha
 
-    with open(arquivo, 'r', encoding='utf-8') as f:
+    # Carregar ordem das estações por linha (para desenho contínuo)
+    linhas_estacoes = defaultdict(list)
+    with open(arquivo_estacoes, 'r', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        next(reader)
+        for row in reader:
+            id_simples = row[0]
+            linha = row[3]
+            linhas_estacoes[linha].append(id_simples)
+
+    with open(arquivo_arestas, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
             u = str(row['origem_id'])
@@ -42,20 +53,18 @@ def carregar_grafo(arquivo):
             linha_estacao[u] = linha
             linha_estacao[v] = linha
 
-            # Informações textuais
             for est_id, nome_pt, nome_orig, nome_trans in [
                 (u, row['nome_pt_origem'], row['nome_original_origem'], row['nome_trans_origem']),
                 (v, row['nome_pt_destino'], row['nome_original_destino'], row['nome_trans_destino'])
             ]:
                 if est_id not in info:
                     info[est_id] = (nome_pt, nome_orig, nome_trans, linha)
-                    # Indexa para busca
                     for termo in [nome_pt, nome_orig, nome_trans]:
                         termo_lower = termo.lower()
                         if est_id not in nome_para_ids[termo_lower]:
                             nome_para_ids[termo_lower].append(est_id)
 
-    return grafo, info, nome_para_ids, coords, linha_estacao
+    return grafo, info, nome_para_ids, coords, linha_estacao, linhas_estacoes
 
 # ------------------------------------------------------------
 # DIJKSTRA
@@ -111,7 +120,7 @@ def buscar_estacao(termo, nome_para_ids, info):
 # ------------------------------------------------------------
 # GERAÇÃO DE MAPA COM FOLIUM
 # ------------------------------------------------------------
-def gerar_mapa(grafo, coords, linha_estacao, info, caminho=None):
+def gerar_mapa(grafo, coords, linha_estacao, info, linhas_estacoes, caminho=None):
     # Paleta de cores para as linhas
     cores_linhas = {}
     paleta = [
@@ -122,20 +131,34 @@ def gerar_mapa(grafo, coords, linha_estacao, info, caminho=None):
     for i, linha in enumerate(set(linha_estacao.values())):
         cores_linhas[linha] = paleta[i % len(paleta)]
 
-    # Mapa base CartoDB Voyager (sem trilhos de metrô, visual limpo)
+    # Mapa base CartoDB Voyager (limpo)
     mapa = folium.Map(
         location=[55.7558, 37.6173],
         zoom_start=11,
-        tiles='CartoDB voyager',   # ou 'CartoDB positron' para fundo claro
+        tiles='CartoDB voyager',
         attr='CartoDB'
     )
 
-# --- DESENHA AS ARESTAS (somente se ambas as pontas têm coordenadas) ---
+    # --- Desenha conexões contínuas por linha (ignorando estações sem coordenadas) ---
+    for linha, ids in linhas_estacoes.items():
+        cor = cores_linhas.get(linha, 'gray')
+        ultima_com_coord = None
+        for est_id in ids:
+            if est_id in coords:
+                if ultima_com_coord is not None:
+                    folium.PolyLine(
+                        locations=[coords[ultima_com_coord], coords[est_id]],
+                        color=cor,
+                        weight=4.5,
+                        opacity=0.85
+                    ).add_to(mapa)
+                ultima_com_coord = est_id
+
+    # --- Desenha também arestas de baldeação (entre linhas diferentes) ---
     arestas_desenhadas = set()
     for u, vizinhos in grafo.items():
         if u not in coords:
             continue
-        lat_u, lon_u = coords[u]
         for v, _ in vizinhos:
             if v not in coords:
                 continue
@@ -143,19 +166,16 @@ def gerar_mapa(grafo, coords, linha_estacao, info, caminho=None):
             if aresta in arestas_desenhadas:
                 continue
             arestas_desenhadas.add(aresta)
-            
-            lat_v, lon_v = coords[v]
             linha = linha_estacao.get(u, 'Desconhecida')
             cor = cores_linhas.get(linha, 'gray')
-            
             folium.PolyLine(
-                locations=[(lat_u, lon_u), (lat_v, lon_v)],
+                locations=[coords[u], coords[v]],
                 color=cor,
                 weight=4.5,
                 opacity=0.85
             ).add_to(mapa)
 
-    # Marcadores das estações (círculos discretos)
+    # --- Marcadores das estações ---
     for est_id, (lat, lon) in coords.items():
         nome_pt, _, _, _ = info.get(est_id, (est_id, '', '', ''))
         folium.CircleMarker(
@@ -169,32 +189,32 @@ def gerar_mapa(grafo, coords, linha_estacao, info, caminho=None):
             popup=folium.Popup(nome_pt, max_width=200)
         ).add_to(mapa)
 
-    # Destaca a rota
+    # --- Destaca a rota ---
     if caminho:
         for i in range(len(caminho)-1):
             u, v = caminho[i], caminho[i+1]
             if u in coords and v in coords:
                 folium.PolyLine(
                     locations=[coords[u], coords[v]],
-                    color='#FFD700',   # amarelo ouro
+                    color='#FFD700',
                     weight=8,
-                    opacity=1.0,
-                    smooth_factor=0.5
+                    opacity=1.0
                 ).add_to(mapa)
 
-        # Ícones de início e fim (usando Font Awesome)
-        folium.Marker(
-            location=coords[caminho[0]],
-            popup=f"<b>INÍCIO:</b><br>{info[caminho[0]][0]}",
-            icon=folium.Icon(color='green', icon='play', prefix='fa')
-        ).add_to(mapa)
-        folium.Marker(
-            location=coords[caminho[-1]],
-            popup=f"<b>DESTINO:</b><br>{info[caminho[-1]][0]}",
-            icon=folium.Icon(color='red', icon='stop', prefix='fa')
-        ).add_to(mapa)
+        if caminho[0] in coords:
+            folium.Marker(
+                location=coords[caminho[0]],
+                popup=f"<b>INÍCIO:</b><br>{info[caminho[0]][0]}",
+                icon=folium.Icon(color='green', icon='play', prefix='fa')
+            ).add_to(mapa)
+        if caminho[-1] in coords:
+            folium.Marker(
+                location=coords[caminho[-1]],
+                popup=f"<b>DESTINO:</b><br>{info[caminho[-1]][0]}",
+                icon=folium.Icon(color='red', icon='stop', prefix='fa')
+            ).add_to(mapa)
 
-    # Adiciona legenda simples das linhas (opcional)
+    # --- Legenda ---
     legend_html = '''
     <div style="position: fixed; bottom: 20px; left: 20px; width: 200px; 
                 background: white; border:2px solid grey; z-index:9999; 
@@ -216,48 +236,13 @@ def gerar_mapa(grafo, coords, linha_estacao, info, caminho=None):
 def main():
     print("🔄 Carregando dados do metrô de Moscou...")
     try:
-        grafo, info, nome_para_ids, coords, linha_estacao = carregar_grafo(ARQUIVO_ARESTAS)
-    except FileNotFoundError:
-        print(f"❌ Arquivo '{ARQUIVO_ARESTAS}' não encontrado.")
-        print("   Execute primeiro: python gerar_grafo_final.py")
+        grafo, info, nome_para_ids, coords, linha_estacao, linhas_estacoes = carregar_grafo(ARQUIVO_ARESTAS, ARQUIVO_ESTACOES)
+    except FileNotFoundError as e:
+        print(f"❌ Arquivo não encontrado: {e}")
+        print("   Certifique-se de que 'arestas_completas.csv' e 'metro_moscou.csv' estão na pasta.")
         return
 
     print(f"✅ {len(grafo)} estações carregadas.\n")
-
-    # ========== CÓDIGO DE DEPURAÇÃO ==========
-    # Verificar Govorovo e Minskaya
-    govorovo_id = '149'
-    minskaya_id = '154'
-    
-    if govorovo_id in grafo:
-        print(f"✅ Govorovo (ID {govorovo_id}) está no grafo.")
-        print(f"   Conexões: {grafo[govorovo_id][:5]}")  # até 5 vizinhos
-    else:
-        print(f"❌ Govorovo (ID {govorovo_id}) NÃO está no grafo.")
-        print(f"   IDs no grafo que começam com 149: {[k for k in grafo.keys() if k.startswith('149')]}")
-    
-    if minskaya_id in grafo:
-        print(f"✅ Minskaya (ID {minskaya_id}) está no grafo.")
-        print(f"   Conexões: {grafo[minskaya_id][:5]}")
-    else:
-        print(f"❌ Minskaya (ID {minskaya_id}) NÃO está no grafo.")
-        print(f"   IDs no grafo que começam com 154: {[k for k in grafo.keys() if k.startswith('154')]}")
-    
-    print("\n" + "="*50 + "\n")
-
-    # Verificar caminho completo
-    caminho_teste = ['149', '150', '151', '152', '153', '154']
-    for i in range(len(caminho_teste)-1):
-        u, v = caminho_teste[i], caminho_teste[i+1]
-        if u in grafo:
-            vizinhos = [viz for viz, _ in grafo[u]]
-            if v in vizinhos:
-                print(f"✅ Aresta {u} → {v} existe.")
-            else:
-                print(f"❌ Aresta {u} → {v} NÃO existe! Vizinhos de {u}: {vizinhos}")
-        else:
-            print(f"❌ Estação {u} não está no grafo.")
-    # ========== FIM DA DEPURAÇÃO ==========
 
     while True:
         print("\n" + "-"*40)
@@ -271,9 +256,13 @@ def main():
         print("\nEstações encontradas:")
         for i, (id_est, nome, linha) in enumerate(res_orig[:10], 1):
             print(f"   {i}. {nome} (Linha {linha})")
-        escolha = int(input("Número: ")) - 1
+        try:
+            escolha = int(input("Número: ")) - 1
+        except ValueError:
+            print("❌ Entrada inválida.")
+            continue
         if escolha < 0 or escolha >= len(res_orig):
-            print("❌ Inválido.")
+            print("❌ Número inválido.")
             continue
         id_origem = res_orig[escolha][0]
 
@@ -285,9 +274,13 @@ def main():
         print("\nEstações encontradas:")
         for i, (id_est, nome, linha) in enumerate(res_dest[:10], 1):
             print(f"   {i}. {nome} (Linha {linha})")
-        escolha = int(input("Número: ")) - 1
+        try:
+            escolha = int(input("Número: ")) - 1
+        except ValueError:
+            print("❌ Entrada inválida.")
+            continue
         if escolha < 0 or escolha >= len(res_dest):
-            print("❌ Inválido.")
+            print("❌ Número inválido.")
             continue
         id_destino = res_dest[escolha][0]
 
@@ -302,11 +295,13 @@ def main():
                 nome, _, _, linha = info[est]
                 print(f"   {i+1}. {nome} (Linha {linha})")
             print("\n🗺️ Gerando mapa...")
-            gerar_mapa(grafo, coords, linha_estacao, info, caminho)
+            gerar_mapa(grafo, coords, linha_estacao, info, linhas_estacoes, caminho)
             print("   Mapa salvo como 'rota_metro.html' e aberto no navegador.")
 
         if input("\nNova consulta? (s/n): ").lower() != 's':
             break
+
+    print("\n👋 Obrigado por usar o planejador de rotas do Metrô de Moscou!")
 
 if __name__ == "__main__":
     main()

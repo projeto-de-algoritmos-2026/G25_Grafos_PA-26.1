@@ -15,7 +15,7 @@ URL_ESTACOES = "https://raw.githubusercontent.com/nalgeon/metro/main/data/statio
 URL_LINHAS   = "https://raw.githubusercontent.com/nalgeon/metro/main/data/line.ru.csv"
 
 VELOCIDADE_MEDIA_KPH = 41.62
-TEMPO_PARADA_SEG = 30
+TEMPO_PARADA_SEG = 60
 vel_km_s = VELOCIDADE_MEDIA_KPH / 3600.0
 
 # Cache de coordenadas obtidas via API
@@ -113,14 +113,15 @@ for row in reader:
     id_cidade = row[1]
     if id_cidade != '1':
         continue
-    nome_original = row[3]
+    nome_original = row[3].strip()
     lat = float(row[4])
     lon = float(row[5])
-    estacoes_nalgeon[nome_original] = (lat, lon)
+    if coordenada_valida(lat, lon):
+        estacoes_nalgeon[nome_original] = (lat, lon)
 
 print(f"✅ Coordenadas carregadas para {len(estacoes_nalgeon)} estações (dataset nalgeon).")
 
-# aqui eu vou usar o .csv feito do json do metrostations, as coisas tão meio pauleira com duas databases diferentes então é bom meter um prettier.
+# --- Carregar CSV gerado do metrostations ---
 print("📂 Carregando seu arquivo metro_moscou.csv...")
 estacoes_metro = []
 linhas_estacoes = defaultdict(list)
@@ -130,7 +131,7 @@ with open(ARQUIVO_METRO_CSV, 'r', encoding='utf-8') as f:
     next(reader)
     for row in reader:
         id_simples = row[0]
-        nome_original = row[1]
+        nome_original = row[1].strip()
         nome_pt = row[2]
         linha = row[3]
         conexoes_str = row[4] if len(row) > 4 else ''
@@ -140,7 +141,7 @@ with open(ARQUIVO_METRO_CSV, 'r', encoding='utf-8') as f:
 
 print(f"✅ Seu CSV carregado: {len(estacoes_metro)} estações.")
 
-# --- Construir arestas ---
+# --- Construir arestas consecutivas e de baldeação ---
 arestas = set()
 for linha, ids in linhas_estacoes.items():
     for i in range(len(ids)-1):
@@ -155,22 +156,19 @@ for id_simples, _, _, _, conexoes in estacoes_metro:
 
 print(f"🔗 Total de arestas únicas: {len(arestas)}")
 
-# --- Verificar e completar coordenadas ---
+# --- Verificar e completar coordenadas (SEM fallback central) ---
 print("\n🔍 Verificando coordenadas das estações...")
-coordenadas_finais = {}  # id_simples -> (lat, lon)
+coordenadas_finais = {}  # id_simples -> (lat, lon) ou (None, None)
 
-# Primeiro, tenta usar as coordenadas do nalgeon (já temos)
 for id_simples, nome_original, _, _, _ in estacoes_metro:
     if nome_original in estacoes_nalgeon:
         lat, lon = estacoes_nalgeon[nome_original]
         if coordenada_valida(lat, lon):
             coordenadas_finais[id_simples] = (lat, lon)
             continue
-    # Se não encontrou ou inválida, marca para buscar
-    coordenadas_finais[id_simples] = None
+    coordenadas_finais[id_simples] = (None, None)
 
-# Identifica quais precisam de API
-faltantes = [id_simples for id_simples, coord in coordenadas_finais.items() if coord is None]
+faltantes = [id_simples for id_simples, coord in coordenadas_finais.items() if coord[0] is None]
 print(f"⚠️ {len(faltantes)} estações com coordenadas ausentes ou inválidas.")
 
 if faltantes:
@@ -179,13 +177,11 @@ if faltantes:
         _, nome_original, _, _, _ = info_dict[id_simples]
         print(f"   [{i}/{len(faltantes)}] {nome_original}")
         lat, lon = buscar_coordenadas_api(nome_original)
-        if lat and lon:
+        if lat and lon and coordenada_valida(lat, lon):
             coordenadas_finais[id_simples] = (lat, lon)
         else:
-            # Fallback: usar coordenada média de Moscou (para não quebrar)
-            coordenadas_finais[id_simples] = (55.7558, 37.6173)
-            print(f"      ⚠️ Usando coordenada central de Moscou como fallback.")
-        time.sleep(1.5)  # Respeitar política da API
+            coordenadas_finais[id_simples] = (None, None)   # sem fallback
+        time.sleep(1.5)
 
 # --- Gerar CSV final ---
 print("\n⏳ Calculando distâncias e tempos...")
@@ -209,9 +205,12 @@ with open(ARQUIVO_SAIDA, 'w', newline='', encoding='utf-8') as f:
         lat_u, lon_u = coordenadas_finais[u]
         lat_v, lon_v = coordenadas_finais[v]
 
-        dist = haversine(lat_u, lon_u, lat_v, lon_v)
-        if dist < 0.1:
-            dist = 0.5
+        if lat_u is not None and lon_u is not None and lat_v is not None and lon_v is not None:
+            dist = haversine(lat_u, lon_u, lat_v, lon_v)
+            if dist < 0.1:
+                dist = 0.5
+        else:
+            dist = 1.81   # distância média padrão
 
         tempo = int(round(dist / vel_km_s + TEMPO_PARADA_SEG))
         nome_linha = linhas.get(linha_u, linha_u)
@@ -221,7 +220,10 @@ with open(ARQUIVO_SAIDA, 'w', newline='', encoding='utf-8') as f:
             nome_orig_u, nome_pt_u, nome_trans_u,
             nome_orig_v, nome_pt_v, nome_trans_v,
             nome_linha,
-            lat_u, lon_u, lat_v, lon_v
+            lat_u if lat_u is not None else '',
+            lon_u if lon_u is not None else '',
+            lat_v if lat_v is not None else '',
+            lon_v if lon_v is not None else ''
         ])
 
 print(f"🎉 Arquivo '{ARQUIVO_SAIDA}' gerado com sucesso!")
