@@ -1,0 +1,269 @@
+id,nome_original,nome_pt,linha,conexoes
+1,Бульвар Рокоссовского,Bulvar Rokossovskogo,1,236
+2,Черкизовская,Cherkizovskaya,1,237
+3,Преображенская площадь,Preobrazhenskaya ploshchad,1,
+4,Сокольники,Sokolniki,1,
+5,Красносельская,Krasnoselskaya,1,
+6,Комсомольская,Komsomolskaya,1,91
+7,Красные ворота,Krasnye vorota,1,
+8,Чистые пруды,Chistye prudy,1,"107,198"
+9,Лубянка,Lubyanka,1,133
+10,Охотный ряд,Okhotnyy ryad,1,"38,64"
+11,Библиотека имени Ленина,Biblioteka imeni Lenina,1,"83,85,175"
+12,Кропоткинская,Kropotkinskaya,1,
+13,Парк культуры,Park kultury,1,97
+14,Фрунзенская,Frunzenskaya,1,
+15,Спортивная,Sportivnaya,1,251
+16,Воробьёвы горы,Vorobyovy gory,1,
+17,Университет,Universitet,1,
+18,Проспект Вернадского,Prospekt Vernadskogo,1,
+19,Юго-Западная,Yugo-Zapadnaya,1,
+20,Тропарёво,Troparyovo,1,
+21,Румянцево,Rumyantsevo,1,
+22,Саларьево,Salarevo,1,
+23,Филатов луг,Filatov lug,1,
+24,Прокшино,Prokshino,1,
+25,Ольховая,Olkhovaya,1,
+26,Коммунарка,Kommunarka,1,
+27,Ховрино,Khovrino,2,
+28,Беломорская,Belomorskaya,2,
+29,Речной вокзал,Rechnoy vokzal,2,
+30,Водный стадион,Vodnyy stadion,2,
+31,Войковская,Voykovskaya,2,"258,259"
+32,Сокол,Sokol,2,
+33,Аэропорт,Aeroport,2,
+34,Динамо,Dinamo,2,216
+35,Белорусская,Belorusskaya,2,88
+36,Маяковская,Mayakovskaya,2,
+37,Тверская,Tverskaya,2,"132,174"
+38,Театральная,Teatralnaya,2,"10,64"
+39,Новокузнецкая,Novokuznetskaya,2,"109,156"
+40,Павелецкая,Paveletskaya,2,40
+41,Автозаводская,Avtozavodskaya,2,246
+42,Технопарк,Tekhnopark,2,
+43,Коломенская,Kolomenskaya,2,
+44,Каширская,Kashirskaya,2,
+45,Кантемировская,Kantemirovskaya,2,
+46,Царицыно,Tsaritsyno,2,
+47,Орехово,Orekhovo,2,
+48,Домодедовская,Domodedovskaya,2,
+49,Красногвардейская,Krasnogvardeyskaya,2,211
+50,Алма-Атинская,Alma-Atinskaya,2,
+51,Пятницкое шоссе,Pyatnitskoe shosse,3,
+52,Митино,Mitino,3,
+53,Волоколамская,Volokolamskaya,3,
+54,Мякинино,Myakinino,3,
+55,Строгино,Strogino,3,
+56,Крылатское,Krylatskoe,3,
+57,Молодёжная,Molodyozhnaya,3,
+58,Кунцевская,Kuntsevskaya,3,73
+59,Славянский бульвар,Slavyanskiy bulvar,3,
+60,Парк Победы,Park Pobedy,3,155
+61,Киевская,Kievskaya,3,"82,86"
+62,Смоленская,Smolenskaya,3,
+63,Арбатская,Arbatskaya,3,"11,84,175"
+64,Площадь Революции,Ploshchad Revolyutsii,3,"10,38"
+65,Курская,Kurskaya,3,"92,199"
+66,Бауманская,Baumanskaya,3,
+67,Электрозаводская,Elektrozavodskaya,3,272
+68,Семёновская,Semyonovskaya,3,
+69,Партизанская,Partizanskaya,3,238
+70,Измайловская,Izmaylovskaya,3,
+71,Первомайская,Pervomayskaya,3,
+72,Щёлковская,Shchyolkovskaya,3,
+73,Кунцевская,Kuntsevskaya,4,58
+74,Пионерская,Pionerskaya,4,
+75,Филёвский парк,Filyovskiy park,4,
+76,Багратионовская,Bagrationovskaya,4,
+77,Фили,Fili,4,
+78,Кутузовская,Kutuzovskaya,4,252
+79,Студенческая,Studencheskaya,4,
+80,Международная,Mezhdunarodnaya,4,253
+81,Выставочная,Vystavochnaya,4,212
+82,Киевская,Kievskaya,4,"61,86"
+83,Смоленская,Smolenskaya,4,
+84,Арбатская,Arbatskaya,4,
+85,Александровский сад,Aleksandrovskiy sad,4,"11,63,175"
+86,Киевская,Kievskaya,5,"61,82"
+87,Краснопресненская,Krasnopresnenskaya,5,131
+88,Белорусская,Belorusskaya,5,35
+89,Новослободская,Novoslobodskaya,5,172
+90,Проспект Мира,Prospekt Mira,5,105
+91,Комсомольская,Komsomolskaya,5,6
+92,Курская,Kurskaya,5,"65,199"
+93,Таганская,Taganskaya,5,"135,157"
+94,Павелецкая,Paveletskaya,5,40
+95,Добрынинская,Dobryninskaya,5,177
+96,Октябрьская,Oktyabrskaya,5,110
+97,Парк культуры,Park kultury,5,13
+98,Медведково,Medvedkovo,6,
+99,Бабушкинская,Babushkinskaya,6,
+100,Свиблово,Sviblovo,6,
+101,Ботанический сад,Botanicheskiy sad,6,233
+102,ВДНХ,VDNKh,6,
+103,Алексеевская,Alekseevskaya,6,
+104,Рижская,Rizhskaya,6,
+105,Проспект Мира,Prospekt Mira,6,90
+106,Сухаревская,Sukharevskaya,6,
+107,Тургеневская,Turgenevskaya,6,"8,198"
+108,Китай-город,Kitay-gorod,6,134
+109,Третьяковская,Tretyakovskaya,6,"39,156"
+110,Октябрьская,Oktyabrskaya,6,96
+111,Шаболовская,Shabolovskaya,6,
+112,Ленинский проспект,Leninskiy prospekt,6,250
+113,Академическая,Akademicheskaya,6,
+114,Профсоюзная,Profsoyuznaya,6,
+115,Новые Черёмушки,Novye Cheryomushki,6,
+116,Калужская,Kaluzhskaya,6,
+117,Беляево,Belyaevo,6,
+118,Коньково,Konkovo,6,
+119,Тёплый Стан,Tyoplyy Stan,6,
+120,Ясенево,Yasenevo,6,
+121,Новоясеневская,Novoyasenevskaya,6,218
+122,Планерная,Planernaya,7,
+123,Сходненская,Skhodnenskaya,7,
+124,Тушинская,Tushinskaya,7,
+125,Спартак,Spartak,7,
+126,Щукинская,Shchukinskaya,7,
+127,Октябрьское поле,Oktyabrskoe pole,7,"256,257"
+128,Полежаевская,Polezhaevskaya,7,"214,255"
+129,Беговая,Begovaya,7,
+130,Улица 1905 года,Ulitsa 1905 goda,7,
+131,Баррикадная,Barrikadnaya,7,87
+132,Пушкинская,Pushkinskaya,7,"37,174"
+133,Кузнецкий мост,Kuznetskiy most,7,9
+134,Китай-город,Kitay-gorod,7,108
+135,Таганская,Taganskaya,7,"93,157"
+136,Пролетарская,Proletarskaya,7,201
+137,Волгоградский проспект,Volgogradskiy prospekt,7,
+138,Текстильщики,Tekstilshchiki,7,
+139,Кузьминки,Kuzminki,7,
+140,Рязанский проспект,Ryazanskiy prospekt,7,
+141,Выхино,Vykhino,7,
+142,Лермонтовский проспект,Lermontovskiy prospekt,7,163
+143,Жулебино,Zhulebino,7,
+144,Котельники,Kotelniki,7,
+145,Рассказовка,Rasskazovka,8,
+146,Новопеределкино,Novoperedelkino,8,
+147,Боровское Шоссе,Borovskoe Shosse,8,
+148,Солнцево,Solntsevo,8,
+149,Говорово,Govorovo,8,
+150,Озёрная,Ozyornaya,8,
+151,Мичуринский Проспект,Michurinskiy Prospekt,8,
+152,Раменки,Ramenki,8,
+153,Ломоносовский проспект,Lomonosovskiy prospekt,8,
+154,Минская,Minskaya,8,
+155,Парк Победы,Park Pobedy,8,60
+156,Третьяковская,Tretyakovskaya,8,"39,109"
+157,Марксистская,Marksistskaya,8,"93,135"
+158,Площадь Ильича,Ploshchad Ilicha,8,200
+159,Авиамоторная,Aviamotornaya,8,263
+160,Шоссе Энтузиастов,Shosse Entuziastov,8,240
+161,Перово,Perovo,8,
+162,Новогиреево,Novogireevo,8,
+163,Новокосино,Novokosino,8,142
+164,Алтуфьево,Altufevo,9,
+165,Бибирево,Bibirevo,9,
+166,Отрадное,Otradnoe,9,
+167,Владыкино,Vladykino,9,232
+168,Петровско-Разумовская,Petrovsko-Razumovskaya,9,192
+169,Тимирязевская,Timiryazevskaya,9,
+170,Дмитровская,Dmitrovskaya,9,
+171,Савёловская,Savyolovskaya,9,217
+172,Менделеевская,Mendeleevskaya,9,89
+173,Цветной бульвар,Tsvetnoy bulvar,9,197
+174,Чеховская,Chekhovskaya,9,"37,132"
+175,Боровицкая,Borovitskaya,9,"11,63,85"
+176,Полянка,Polyanka,9,
+177,Серпуховская,Serpukhovskaya,9,95
+178,Тульская,Tulskaya,9,
+179,Нагатинская,Nagatinskaya,9,248
+180,Нагорная,Nagornaya,9,
+181,Нахимовский проспект,Nakhimovskiy prospekt,9,
+182,Севастопольская,Sevastopolskaya,9,
+183,Чертановская,Chertanovskaya,9,
+184,Южная,Yuzhnaya,9,
+185,Пражская,Prazhskaya,9,
+186,Улица академика Янгеля,Ulitsa akademika Yangelya,9,
+187,Аннино,Annino,9,
+188,Бульвар Дмитрия Донского,Bulvar Dmitriya Donskogo,9,220
+189,Селигерская,Seligerskaya,10,
+190,Верхние Лихоборы,Verkhnie Likhobory,10,
+191,Окружная,Okruzhnaya,10,231
+192,Петровско-Разумовская,Petrovsko-Razumovskaya,10,168
+193,Фонвизинская,Fonvizinskaya,10,
+194,Бутырская,Butyrskaya,10,
+195,Марьина Роща,Marina Roshcha,10,
+196,Достоевская,Dostoevskaya,10,
+197,Трубная,Trubnaya,10,173
+198,Сретенский бульвар,Sretenskiy bulvar,10,"8,107"
+199,Чкаловская,Chkalovskaya,10,"65,92"
+200,Римская,Rimskaya,10,158
+201,Крестьянская застава,Krestyanskaya zastava,10,136
+202,Дубровка,Dubrovka,10,245
+203,Кожуховская,Kozhukhovskaya,10,
+204,Печатники,Pechatniki,10,
+205,Волжская,Volzhskaya,10,
+206,Люблино,Lyublino,10,
+207,Братиславская,Bratislavskaya,10,
+208,Марьино,Marino,10,
+209,Борисово,Borisovo,10,
+210,Шипиловская,Shipilovskaya,10,
+211,Зябликово,Zyablikovo,10,49
+212,Деловой Центр,Delovoy Tsentr,11,81
+213,Шелепиха,Shelepikha,11,
+214,Хорошевская,Khoroshevskaya,11,128
+215,ЦСКА,TsSKA,11,
+216,Петровский Парк,Petrovskiy Park,11,34
+217,Савёловская,Savyolovskaya,11,171
+218,Битцевский парк,Bittsevskiy park,12,121
+219,Лесопарковая,Lesoparkovaya,12,
+220,Улица Старокачаловская,Ulitsa Starokachalovskaya,12,188
+221,Улица Скобелевская,Ulitsa Skobelevskaya,12,
+222,Бульвар Адмирала Ушакова,Bulvar Admirala Ushakova,12,
+223,Улица Горчакова,Ulitsa Gorchakova,12,
+224,Бунинская аллея,Buninskaya alleya,12,
+231,Окружная,Okruzhnaya,14,191
+232,Владыкино,Vladykino,14,167
+233,Ботанический сад,Botanicheskiy sad,14,101
+234,Ростокино,Rostokino,14,
+235,Белокаменная,Belokamennaya,14,
+236,Бульвар Рокоссовского,Bulvar Rokossovskogo,14,1
+237,Локомотив,Lokomotiv,14,2
+238,Измайлово,Izmaylovo,14,69
+239,Соколиная гора,Sokolinaya gora,14,
+240,Шоссе Энтузиастов,Shosse Entuziastov,14,160
+241,Андроновка,Andronovka,14,
+242,Нижегородская,Nizhegorodskaya,14,264
+243,Новохохловская,Novokhokhlovskaya,14,
+244,Угрешская,Ugreshskaya,14,
+245,Дубровка,Dubrovka,14,202
+246,Автозаводская,Avtozavodskaya,14,41
+247,ЗИЛ,ZIL,14,
+248,Верхние Котлы,Verkhnie Kotly,14,179
+249,Крымская,Krymskaya,14,
+250,Площадь Гагарина,Ploshchad Gagarina,14,112
+251,Лужники,Luzhniki,14,15
+252,Кутузовская,Kutuzovskaya,14,78
+253,Деловой центр,Delovoy tsentr,14,80
+254,Шелепиха,Shelepikha,14,
+255,Хорошёво,Khoroshyovo,14,128
+256,Зорге,Zorge,14,127
+257,Панфиловская,Panfilovskaya,14,127
+258,Стрешнево,Streshnevo,14,31
+259,Балтийская,Baltiyskaya,14,31
+260,Коптево,Koptevo,14,
+261,Лихоборы,Likhobory,14,
+262,Лефортово,Lefortovo,15,
+263,Авиамоторная,Aviamotornaya,15,159
+264,Нижегородская,Nizhegorodskaya,15,242
+265,Стахановская,Stakhanovskaya,15,
+266,Окская,Okskaya,15,
+267,Юго-Восточная,Yugo-Vostochnaya,15,
+268,Косино,Kosino,15,
+269,Улица Дмитриевского,Ulitsa Dmitrievskogo,15,
+270,Лухмановская,Lukhmanovskaya,15,
+271,Некрасовка,Nekrasovka,15,
+272,Электрозаводская,Elektrozavodskaya,15,67
+273,Народное ополчение,Narodnoe opolchenie,11,
+274,Мнёвники,Mnyovniki,11,
