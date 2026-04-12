@@ -12,9 +12,9 @@
 
 ## Sobre o trabalho
 
-Este projeto implementa o algoritmo de **Dijkstra** para encontrar a rota mais rápida entre duas estações do metrô de Moscou. O sistema modela a rede metroviária como um grafo não direcionado e ponderado, onde os vértices representam as estações e as arestas representam os trechos entre estações consecutivas ou conexões de baldeação. Os pesos das arestas são estimados a partir de distâncias geográficas reais e parâmetros operacionais do metrô. O metrô da Rússia foi pensado em se aprimorar nos anos 50 muito após a segunda guerra com uma união soviética forte. Os soviéticos criaram então uma linha pensada em tornar carros incovenientes e o transporte público mais acessível. Mesmo com um número menor de expansões recentes, o metrô de Moscou ainda é o terceiro maior do mundo com 450km de extensão, perdendo somente para o de Nova Iorque e o de Xangai. Os luxuosos metrôs soviéticos com arquitetura em mármore lustroso ainda são considerados o palácio do povo, cumprindo sua missão de ser os metrôs mais profundos (por conta da guerra fria) e mais rápidos do mundo. Este trabalho busca ver se estes 450km realmente tem rotas tão rápidas.
+Este projeto implementa o algoritmo de **Dijkstra** e de **Busca em profundidade** para encontrar a rota mais rápida entre duas estações do metrô de Moscou. O sistema modela a rede metroviária como um grafo não direcionado e ponderado, onde os vértices representam as estações e as arestas representam os trechos entre estações consecutivas ou conexões de baldeação. Os pesos das arestas são estimados a partir de distâncias geográficas reais e parâmetros operacionais do metrô. O metrô da Rússia foi pensado em se aprimorar nos anos 50 muito após a segunda guerra com uma união soviética forte. Os soviéticos criaram então uma linha pensada em tornar carros incovenientes e o transporte público mais acessível. Mesmo com um número menor de expansões recentes, o metrô de Moscou ainda é o terceiro maior do mundo com 450km de extensão, perdendo somente para o de Nova Iorque e o de Xangai. Os luxuosos metrôs soviéticos com arquitetura em mármore lustroso ainda são considerados o palácio do povo, cumprindo sua missão de ser os metrôs mais profundos (por conta da guerra fria) e mais rápidos do mundo. Este trabalho busca ver se estes 450km realmente tem rotas tão rápidas.
 
-### 🧩 Desafios e soluções de engenharia
+###  Desafios e soluções de engenharia
 
 A construção de um grafo realista e funcional exigiu a superação de diversas dificuldades técnicas, que foram resolvidas com uma abordagem de engenharia de dados:
 
@@ -48,6 +48,13 @@ A construção de um grafo realista e funcional exigiu a superação de diversas
 6. **Busca flexível de estações**  
    - O sistema permite buscar estações digitando parte do nome em **português transliterado**, **russo original** ou **transliteração ASCII**, graças a um índice que armazena as três variações de cada estação.
 
+### Como usar?
+
+É um conjunto de códigos python muito simples com três opções (ambas utilizando os .csv que já estão construidos aqui). Rode metro_bfs.py para rodar a busca em BFS ou o metro_dijkstra para o Dijkstra. A terceira opção é rodar metro_algoritimos_comp que exibe uma janela visual para uso do mapa bem como uma opção de compativo entre os dois algotimos usados, sendo essa a versão definitiva.
+
+Instale as dependências com **pip install -r requirements.txt** 
+Algumas dependências são pacotes padrão do Python, se mesmo com requirements elas não estiverem lá, citamos todas as bibliotecas abaixo. 
+
 ### 🗺️ Visualização do mapa
 
 O mapa interativo é gerado com a biblioteca **Folium** (Leaflet para Python). As linhas do metrô são coloridas de acordo com a linha oficial e desenhadas como segmentos retos conectando as coordenadas das estações. Para evitar conflitos visuais com os trilhos desenhados no mapa base, utiliza-se o estilo cartográfico limpo **CartoDB Voyager**, que omite a infraestrutura de transporte, destacando apenas as conexões modeladas pelo grafo. A rota calculada é exibida em amarelo espesso, com marcadores especiais para origem e destino.
@@ -59,6 +66,7 @@ O mapa interativo é gerado com a biblioteca **Folium** (Leaflet para Python). A
   - `csv`, `json`, `math`, `heapq`, `collections`, `urllib.request`, `time` (módulos da biblioteca padrão)
   - `requests` – para chamadas à API Nominatim
   - `folium` – para geração do mapa interativo
+  - 'T'inker' – Para o programa final com janelas e comparativo. 
 
 ## Screenshots (demonstração) 
 <div align="center">

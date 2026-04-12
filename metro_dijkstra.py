@@ -4,15 +4,15 @@ import webbrowser
 from collections import defaultdict
 import folium
 
-# ------------------------------------------------------------
+
 # CONFIGURAÇÕES
-# ------------------------------------------------------------
+
 ARQUIVO_ARESTAS = 'arestas_completas.csv'
 ARQUIVO_ESTACOES = 'metro_moscou.csv'
 
-# ------------------------------------------------------------
+
 # CARREGAMENTO DO GRAFO
-# ------------------------------------------------------------
+
 def carregar_grafo(arquivo_arestas, arquivo_estacoes):
     grafo = defaultdict(list)
     info = {}                # id -> (nome_pt, nome_original, nome_trans, linha)
@@ -66,9 +66,9 @@ def carregar_grafo(arquivo_arestas, arquivo_estacoes):
 
     return grafo, info, nome_para_ids, coords, linha_estacao, linhas_estacoes
 
-# ------------------------------------------------------------
+
 # DIJKSTRA
-# ------------------------------------------------------------
+
 def dijkstra(grafo, origem, destino):
     dist = {origem: 0}
     prev = {}
@@ -101,9 +101,9 @@ def dijkstra(grafo, origem, destino):
     caminho.reverse()
     return dist[destino], caminho
 
-# ------------------------------------------------------------
+
 # BUSCA DE ESTAÇÕES
-# ------------------------------------------------------------
+
 def buscar_estacao(termo, nome_para_ids, info):
     termo = termo.lower()
     resultados = []
@@ -117,9 +117,8 @@ def buscar_estacao(termo, nome_para_ids, info):
                     resultados.append((id_est, nome_pt, linha))
     return resultados
 
-# ------------------------------------------------------------
+
 # GERAÇÃO DE MAPA COM FOLIUM
-# ------------------------------------------------------------
 def gerar_mapa(grafo, coords, linha_estacao, info, linhas_estacoes, caminho=None):
     # Paleta de cores para as linhas
     cores_linhas = {}
@@ -214,7 +213,7 @@ def gerar_mapa(grafo, coords, linha_estacao, info, linhas_estacoes, caminho=None
                 icon=folium.Icon(color='red', icon='stop', prefix='fa')
             ).add_to(mapa)
 
-    # --- Legenda ---
+
     legend_html = '''
     <div style="position: fixed; bottom: 20px; left: 20px; width: 200px; 
                 background: white; border:2px solid grey; z-index:9999; 
@@ -230,9 +229,9 @@ def gerar_mapa(grafo, coords, linha_estacao, info, linhas_estacoes, caminho=None
     mapa.save('rota_metro.html')
     webbrowser.open('rota_metro.html')
 
-# ------------------------------------------------------------
+
 # INTERFACE PRINCIPAL
-# ------------------------------------------------------------
+
 def main():
     print("🔄 Carregando dados do metrô de Moscou...")
     try:
