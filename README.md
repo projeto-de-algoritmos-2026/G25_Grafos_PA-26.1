@@ -72,8 +72,10 @@ O mapa interativo é gerado com a biblioteca **Folium** (Leaflet para Python). A
 <div align="center">
   <table>
     <tr>
-      <td align="center"><img src="imgs/Print1.png" alt="Tela inicial" width="500"/><br/>Tela inicial</td>
-      <td align="center"><img src="imgs/print2.png" alt="Busca de estação" width="350"/><br/>Busca de estação</td>
+      <td align="center"><img src="imgs/Print1.png" alt="Rota - Dijkstra" width="500"/><br/>Tela inicial</td>
+      <td align="center"><img src="imgs/print2.png" alt="Busca de estação - Dijkstra" width="350"/><br/>Busca de estação</td>
+      <td align="center"><img src="imgs/print4.png" alt="Busca de estação - BFS" width="350"/><br/>Busca de estação</td>
+      <td align="center"><img src="imgs/print5.png" alt="Rota - BFS" width="350"/><br/>Busca de estação</td>
       <td align="center"><img src="imgs/print3.png" alt="Rota calculada" width="350"/><br/>Rota de 2020</td>
     </tr>
   </table>
