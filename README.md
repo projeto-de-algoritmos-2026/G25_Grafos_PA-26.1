@@ -81,7 +81,5 @@ O mapa interativo é gerado com a biblioteca **Folium** (Leaflet para Python). A
 
 ## Vídeo (demonstração)
 
-[![Apresentação G25  - GRAFOS PA 2026 1](https://img.youtube.com/vi/tdbSsv_GBbw/0.jpg)](https://youtu.be/tdbSsv_GBbw)
-
 [Apresentação G25  - GRAFOS PA 2026 1](https://youtu.be/tdbSsv_GBbw)
 
