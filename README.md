@@ -12,7 +12,7 @@
 
 ## Sobre o trabalho
 
-Este projeto implementa o algoritmo de **Dijkstra** e de **Busca em profundidade** para encontrar a rota mais rápida entre duas estações do metrô de Moscou. O sistema modela a rede metroviária como um grafo não direcionado e ponderado, onde os vértices representam as estações e as arestas representam os trechos entre estações consecutivas ou conexões de baldeação. Os pesos das arestas são estimados a partir de distâncias geográficas reais e parâmetros operacionais do metrô. O metrô da Rússia foi pensado em se aprimorar nos anos 50 muito após a segunda guerra com uma união soviética forte. Os soviéticos criaram então uma linha pensada em tornar carros incovenientes e o transporte público mais acessível. Mesmo com um número menor de expansões recentes, o metrô de Moscou ainda é o terceiro maior do mundo com 450km de extensão, perdendo somente para o de Nova Iorque e o de Xangai. Os luxuosos metrôs soviéticos com arquitetura em mármore lustroso ainda são considerados o palácio do povo, cumprindo sua missão de ser os metrôs mais profundos (por conta da guerra fria) e mais rápidos do mundo. Este trabalho busca ver se estes 450km realmente tem rotas tão rápidas.
+Este projeto implementa o algoritmo de **Dijkstra** e de **Busca em Largura (BFS)** para encontrar a rota mais rápida entre duas estações do metrô de Moscou. O sistema modela a rede metroviária como um grafo não direcionado e ponderado, onde os vértices representam as estações e as arestas representam os trechos entre estações consecutivas ou conexões de baldeação. Os pesos das arestas são estimados a partir de distâncias geográficas reais e parâmetros operacionais do metrô. O metrô da Rússia foi pensado em se aprimorar nos anos 50 muito após a segunda guerra com uma união soviética forte. Os soviéticos criaram então uma linha pensada em tornar carros incovenientes e o transporte público mais acessível. Mesmo com um número menor de expansões recentes, o metrô de Moscou ainda é o terceiro maior do mundo com 450km de extensão, perdendo somente para o de Nova Iorque e o de Xangai. Os luxuosos metrôs soviéticos com arquitetura em mármore lustroso ainda são considerados o palácio do povo, cumprindo sua missão de ser os metrôs mais profundos (por conta da guerra fria) e mais rápidos do mundo. Este trabalho busca ver se estes 450km realmente tem rotas tão rápidas.
 
 ###  Desafios e soluções de engenharia
 
@@ -66,7 +66,7 @@ O mapa interativo é gerado com a biblioteca **Folium** (Leaflet para Python). A
   - `csv`, `json`, `math`, `heapq`, `collections`, `urllib.request`, `time` (módulos da biblioteca padrão)
   - `requests` – para chamadas à API Nominatim
   - `folium` – para geração do mapa interativo
-  - 'T'inker' – Para o programa final com janelas e comparativo. 
+  - `Tinker` – Para o programa final com janelas e comparativo. 
 
 ## Screenshots (demonstração) 
 <div align="center">
@@ -80,3 +80,4 @@ O mapa interativo é gerado com a biblioteca **Folium** (Leaflet para Python). A
 </div>
 
 ## Vídeo (demonstração)
+
